@@ -5,10 +5,6 @@
     dest: "{{ server_destination }}"
     force: yes
 
-- name: Setup 'ubuntu' user permissions related to the sync folders
-  command: usermod -aG vboxsf ubuntu
-  become: yes
-
 - composer:
     working_dir: "{{ server_destination }}"
     ignore_platform_reqs: yes

@@ -2,6 +2,7 @@
 
 - include: activate-redis.yml
 - include: update-caching-settings.yml
+- include: fix-user-permission.yml
 - include: create-cron.yml
 - include: create-fileadmin.yml
 - include: composer.yml
