@@ -1,0 +1,6 @@
+
+- name: Update AdditionalConfiguration
+  template:
+    src=AdditionalConfiguration.php.j2
+    dest={{ deploy_to }}/typo3conf/AdditionalConfiguration.php
+    force=no

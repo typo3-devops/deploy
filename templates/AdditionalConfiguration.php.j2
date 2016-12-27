@@ -1,0 +1,58 @@
+<?php
+
+$context = \TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext();
+
+if ($context->isTesting()) {
+
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['database'] = '';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['host']     = '';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['username'] = '';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['password'] = '';
+
+    //$_SERVER['HTTPS']  = 'on';
+}
+
+/**
+ * Developer Configuration
+ */
+if ($context->isDevelopment()) {
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['database'] = '{{ database }}';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['host']     = '127.0.0.1';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['username'] = '{{ database_user }}';
+    $GLOBALS['TYPO3_CONF_VARS']['DB']['password'] = '{{ database_pass }}';
+
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['enableDeprecationLog'] = '1';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'] = '*';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['displayErrors'] = true;
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['sqlDebug'] = 1;
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLogLevel'] = 2;
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] = '{{webserver_hostname}}';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern'] = '{{webserver_hostname}}';
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword'] = 'bacb98acf97e0b6112b1d1b650b84971';
+
+     //Mailhog
+    $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_sendmail_command'] = '/opt/mailhog -t -i ';
+    $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] = 'smtp';
+    $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_smtp_server'] = 'localhost:1025';
+}
+
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['useCachingFramework'] = '1';
+$caches = array(
+    'cache_pages'        => 9,
+    'cache_pagesection'  => 10,
+    'cache_hash'         => 11,
+    'cache_rootline'     => 12,
+    'extbase_reflection' => 13,
+    'extbase_object'     => 14
+);
+
+foreach ($caches as $cache => $options) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$cache]['backend'] =
+        'TYPO3\\CMS\\Core\\Cache\\Backend\\RedisBackend';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$cache]['options'] = [
+        'hostname'        => 'decorner.dev',
+        'defaultLifetime' => 86400,
+        'database'        => $options,
+    ];
+}

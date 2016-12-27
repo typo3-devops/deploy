@@ -1,0 +1,10 @@
+
+- name: Create fileadmin folder
+  file:
+    path: "{{ deploy_to }}/fileadmin"
+    state: "directory"
+
+- name: Create uploads folder
+  file:
+    path: "{{ deploy_to }}/uploads"
+    state: "directory"

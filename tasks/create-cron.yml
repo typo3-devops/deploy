@@ -1,0 +1,7 @@
+- name: Create cron file
+  file: path=/var/spool/cron/crontabs/ubuntu state=touch mode="u=rw,g=r,o=r"
+
+- name: Update Cron Table related to Scheduler
+  lineinfile:
+    dest="/var/spool/cron/crontabs/ubuntu"
+    line="*/1 * * * * php {{deploy_to}}/typo3/cli_dispatch.phpsh scheduler"

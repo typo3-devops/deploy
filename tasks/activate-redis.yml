@@ -1,0 +1,10 @@
+
+- name: Add redis extension to the FPM
+  shell: ln -sf /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/20-redis.ini
+
+- name: Add redis extension to the CLI
+  shell: ln -sf /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/20-redis.ini
+
+- service:
+    name: php7.0-fpm
+    state: restarted
