@@ -9,8 +9,8 @@
   command: /var/www/vendor/bin/typo3cms extension:deactivate --extension-keys {{ inactiveExtensions|join(', ') }}
 
 - name: Activate extensions
-  command: /var/www/vendor/bin/typo3cms extension:activate --extension-keys {{ (cmsUserExtensions + activeCoreExtensions)|join(', ') }}
-
+  command: /var/www/vendor/bin/typo3cms extension:activate --extension-keys {{ activeCoreExtensions|join(', ') }}
+  
 - name: Generate Package States File
   command: /var/www/vendor/bin/typo3cms install:generatepackagestates
 
