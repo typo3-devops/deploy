@@ -7,4 +7,3 @@
 - include: create-fileadmin.yml
 - include: composer.yml
 - include: import-db.yml
-- include: update-configuration.yml
