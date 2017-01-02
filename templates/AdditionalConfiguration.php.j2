@@ -56,3 +56,5 @@ foreach ($caches as $cache => $options) {
         'database'        => $options,
     ];
 }
+
+$GLOBALS['TYPO3_CONF_VARS']['EXT']['runtimeActivatedPackages'] = [{{ activeCoreExtensions }}];
