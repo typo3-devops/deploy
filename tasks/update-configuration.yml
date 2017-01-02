@@ -8,18 +8,11 @@
 - name: Generate Package States File
   command: /var/www/vendor/bin/typo3cms install:generatepackagestates
 
-- name: Activate extensions
-  command: /var/www/vendor/bin/typo3cms extension:activate --extension-keys {{ activeCoreExtensions|join(', ') }}
-
 - name: Deactivate unused core extensions
   command: /var/www/vendor/bin/typo3cms extension:deactivate --extension-keys {{ inactiveExtensions|join(', ') }}
 
 - name: Generate Package States File
-  command: /var/www/vendor/bin/typo3cms install:generatepackagestates
-  
-- name: Generate Package States File
   command: /var/www/vendor/bin/typo3cms configuration:set SYS/systemLocale en_US.UTF-8
-
 
 - name: Restart Nginx
   service: name=nginx state=restarted 
