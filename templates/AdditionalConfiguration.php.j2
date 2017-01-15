@@ -54,15 +54,5 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLocale'] = 'en_US.UTF-8';
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['setDBinit'] = 'SET SESSION sql_mode='';';
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLog'] = 'syslog,user,3';
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLogLevel'] = '3';
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['LOG'] => [
-    'writerConfiguration' => [
-        [
-            'TYPO3\CMS\Core\Log\Writer\SyslogWriter' = [
-                'facility' => 'user',
-            ],
-        ],
-        '__UNSET',
-    ]
-];
 
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['runtimeActivatedPackages'] = ["{{ activeCoreExtensions | list | join("\", \"") }}"];
