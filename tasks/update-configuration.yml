@@ -5,14 +5,16 @@
     dest={{ deploy_to }}/typo3conf/AdditionalConfiguration.php
     force=no
 
+- stat: path={{ deploy_to }}/typo3conf/PackageStates.php
+  register: ps
+
 - name: Generate Package States File
   command: /var/www/vendor/bin/typo3cms install:generatepackagestates
+  when: ps.stat.exists == False
 
 - name: Deactivate unused core extensions
   command: /var/www/vendor/bin/typo3cms extension:deactivate --extension-keys {{ inactiveExtensions|join(', ') }}
-
-- name: Generate Package States File
-  command: /var/www/vendor/bin/typo3cms configuration:set SYS/systemLocale en_US.UTF-8
+  when: ps.stat.exists == False
 
 - name: Restart Nginx
-  service: name=nginx state=restarted 
+  service: name=nginx state=restarted

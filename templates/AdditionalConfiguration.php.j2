@@ -2,16 +2,6 @@
 
 $context = \TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext();
 
-if ($context->isTesting()) {
-
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['database'] = '';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['host']     = '';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['username'] = '';
-    $GLOBALS['TYPO3_CONF_VARS']['DB']['password'] = '';
-
-    //$_SERVER['HTTPS']  = 'on';
-}
-
 /**
  * Developer Configuration
  */
@@ -21,19 +11,18 @@ if ($context->isDevelopment()) {
     $GLOBALS['TYPO3_CONF_VARS']['DB']['username'] = '{{ database_user }}';
     $GLOBALS['TYPO3_CONF_VARS']['DB']['password'] = '{{ database_pass }}';
 
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['enableDeprecationLog'] = '1';
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'] = '*';
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['displayErrors'] = true;
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['sqlDebug'] = 1;
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLogLevel'] = 2;
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] = '{{webserver_hostname}}';
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern'] = '{{webserver_hostname}}';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] = '{{ webserver_hostname }}';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern'] = '(.+\.)?{{webserver_hostname | replace(".dev", "\.dev") }}';
+
     $GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword'] = 'bacb98acf97e0b6112b1d1b650b84971';
 
      //Mailhog
     $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_sendmail_command'] = '/opt/mailhog -t -i ';
     $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] = 'smtp';
     $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_smtp_server'] = 'localhost:1025';
+
+    //$_SERVER['HTTPS']  = 'on';
 }
 
 
@@ -56,5 +45,24 @@ foreach ($caches as $cache => $options) {
         'database'        => $options,
     ];
 }
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['createGroup'] = 'www-data';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['fileCreateMask'] = '0660';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['folderCreateMask'] = '0770';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] = 'Europe/Berlin';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLocale'] = 'en_US.UTF-8';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['setDBinit'] = 'SET SESSION sql_mode='';';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLog'] = 'syslog,user,3';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLogLevel'] = '3';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['LOG'] => [
+    'writerConfiguration' => [
+        [
+            'TYPO3\CMS\Core\Log\Writer\SyslogWriter' => [
+                'facility' => 'user',
+            ],
+        ],
+        '__UNSET',
+    ]
+];
 
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['runtimeActivatedPackages'] = ["{{ activeCoreExtensions | list | join("\", \"") }}"];

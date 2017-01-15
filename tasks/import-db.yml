@@ -1,10 +1,3 @@
----
-
-- name: Copy database dump on a server
-  copy:
-    src: "../../data/fixtures/dump.sql"
-    dest: "/var/"
-    force: yes
 
 - name: Import database dump
-  mysql_db: name={{ database }}  state=import target=/var/dump.sql
+  mysql_db: name={{ database }}  state=import target=/var/www/data/fixtures/dump.sql

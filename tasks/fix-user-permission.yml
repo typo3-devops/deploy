@@ -1,4 +1,0 @@
-
-- name: Setup 'ubuntu' user permissions related to the sync folders
-  command: usermod -aG vboxsf ubuntu
-  become: yes

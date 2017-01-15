@@ -1,7 +1,6 @@
 ---
 
 - include: activate-redis.yml
-- include: fix-user-permission.yml
 - include: create-cron.yml
 - include: create-fileadmin.yml
 - include: composer.yml
