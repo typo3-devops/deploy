@@ -40,7 +40,7 @@ foreach ($caches as $cache => $options) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$cache]['backend'] =
         'TYPO3\\CMS\\Core\\Cache\\Backend\\RedisBackend';
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$cache]['options'] = [
-        'hostname'        => 'decorner.dev',
+        'hostname'        => '{{ webserver_hostname }}',
         'defaultLifetime' => 86400,
         'database'        => $options,
     ];
@@ -57,7 +57,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLogLevel'] = '3';
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['LOG'] => [
     'writerConfiguration' => [
         [
-            'TYPO3\CMS\Core\Log\Writer\SyslogWriter' => [
+            'TYPO3\CMS\Core\Log\Writer\SyslogWriter' = [
                 'facility' => 'user',
             ],
         ],
